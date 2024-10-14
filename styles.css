@@ -1,0 +1,66 @@
+* {
+   margin: 0;
+   padding: 0;
+}
+
+body {
+   height: 100vh;
+   width: 100vw;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
+.container {
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+   padding: 50px;
+   border-radius: 10px;
+}
+
+form > div {
+   margin-bottom: 10px;
+}
+
+input {
+   width: 85%;
+   height: 15px;
+   padding: 10px;
+   border: 1px solid rgba(0, 0, 0, 0.2);
+   border-radius: 5px;
+}
+
+select {
+   width: 90%;
+   padding: 15px;
+   border: 1px solid rgba(0, 0, 0, 0.2);
+   border-radius: 5px;
+}
+
+input.valid {
+   border-color: #008000;
+}
+
+input.valid:focus {
+   outline-color: #008000;
+}
+
+input.invalid {
+   border-color: #ff0000;
+}
+
+input.invalid:focus {
+   outline-color: #ff0000;
+}
+
+button {
+   background-color: rgb(89, 109, 72);
+   color: #fff;
+   border: none;
+   padding: 10px;
+   border-radius: 8px;
+
+   font-size: 1.2em;
+   font-weight: bold;
+   cursor: pointer;
+}

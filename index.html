@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="styles.css" />
+      <title>FORM</title>
+   </head>
+   <body>
+      <div class="container">
+         <div id="error"></div>
+
+         <form id="form" action="#" method="get" novalidate>
+            <div>
+               <label for="email">Email:</label>
+               <input type="email" id="email" name="email" required />
+            </div>
+
+            <div>
+               <label for="country">Country:</label>
+               <select id="country" name="country" required>
+                  <option value="">--Select a country--</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="UK">United Kingdom</option>
+               </select>
+            </div>
+
+            <div>
+               <label for="zipcode">Zipcode:</label>
+               <input type="text" id="zipcode" name="zipcode" required />
+            </div>
+
+            <div>
+               <label for="password">Password:</label>
+               <input type="password" id="password" name="password" required />
+            </div>
+
+            <div>
+               <label for="confirm-password">Confirm Password:</label>
+               <input
+                  type="password"
+                  id="confirm-password"
+                  name="confirm-password"
+                  required
+               />
+            </div>
+
+            <button type="submit">submit</button>
+         </form>
+      </div>
+
+      <script src="script.js"></script>
+   </body>
+</html>
