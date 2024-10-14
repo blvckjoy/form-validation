@@ -7,17 +7,16 @@
       <title>FORM</title>
    </head>
    <body>
-      <div class="container">
-         <div id="error"></div>
-
+      <div>
          <form id="form" action="#" method="get" novalidate>
-            <div>
-               <label for="email">Email:</label>
+            <h1 id="heading">Form Registration</h1>
+            <div class="input-control">
+               <label for="email">Email</label>
                <input type="email" id="email" name="email" required />
             </div>
 
-            <div>
-               <label for="country">Country:</label>
+            <div class="input-control">
+               <label for="country">Country</label>
                <select id="country" name="country" required>
                   <option value="">--Select a country--</option>
                   <option value="US">United States</option>
@@ -26,18 +25,18 @@
                </select>
             </div>
 
-            <div>
-               <label for="zipcode">Zipcode:</label>
+            <div class="input-control">
+               <label for="zipcode">Zipcode</label>
                <input type="text" id="zipcode" name="zipcode" required />
             </div>
 
-            <div>
-               <label for="password">Password:</label>
+            <div class="input-control">
+               <label for="password">Password</label>
                <input type="password" id="password" name="password" required />
             </div>
 
-            <div>
-               <label for="confirm-password">Confirm Password:</label>
+            <div class="input-control">
+               <label for="confirm-password">Confirm Password</label>
                <input
                   type="password"
                   id="confirm-password"
