@@ -20,25 +20,6 @@ const patterns = {
 form.addEventListener("submit", (e) => {
    e.preventDefault();
 
-   // custom validity checks
-   email.setCustomValidity(
-      email.value === ""
-         ? "Email is required"
-         : !emailRegex.test(email.value)
-         ? "Please enter a valid email address"
-         : ""
-   );
-
-   password.setCustomValidity(
-      password.value === ""
-         ? "Password is required"
-         : password.value === "password"
-         ? "Password cannot be password"
-         : !passwordRegex.test(password.value)
-         ? "Password must contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character."
-         : ""
-   );
-
    // check validity of all form elements
    const isValid = form.checkValidity();
 
@@ -52,50 +33,14 @@ form.addEventListener("submit", (e) => {
       inputs.forEach((input) => {
          if (input === zipcode) {
             validateZipcode();
-         }
-         if (input === confirmPassword) {
+         } else if (input === confirmPassword) {
             validateConfirmPassword();
          } else {
-            if (!input.validity.valid) {
-               input.classList.add("invalid");
-            } else {
-               input.classList.remove("invalid");
-            }
+            validateInput(input);
          }
       });
    }
 });
-
-function validateZipcode() {
-   const pattern = patterns[country.value];
-   if (pattern && pattern.test(zipcode.value.trim())) {
-      zipcode.setCustomValidity("");
-      zipcode.classList.add("valid");
-      zipcode.classList.remove("invalid");
-   } else {
-      zipcode.setCustomValidity(
-         "Please enter a valid zipcode for the selected country"
-      );
-      zipcode.classList.add("invalid");
-      zipcode.classList.remove("valid");
-   }
-}
-
-function validateConfirmPassword() {
-   let errorMessage = "";
-
-   if (confirmPassword.value === "") {
-      errorMessage = "Password is required";
-   } else if (confirmPassword.value === "password") {
-      errorMessage = "Password cannot be password";
-   } else if (confirmPassword.value !== password.value) {
-      errorMessage = "Passwords do not match";
-   }
-
-   confirmPassword.setCustomValidity(errorMessage);
-   confirmPassword.classList.toggle("valid", !errorMessage);
-   confirmPassword.classList.toggle("invalid", !!errorMessage);
-}
 
 // Add input event listeners to clear custom validity as user types
 inputs.forEach((input) => {
@@ -116,26 +61,102 @@ inputs.forEach((input) => {
       }
    });
 
-   input.addEventListener("blur", () => {
+   // Add change event listener to validate inputs
+   input.addEventListener("change", () => {
       if (input === zipcode) {
          validateZipcode();
       } else if (input === confirmPassword) {
          validateConfirmPassword();
-      } else {
-         if (!input.checkValidity()) {
-            input.classList.add("invalid");
-         }
+      } else if (input === email) {
+         validateEmail();
+      } else if (input === password) {
+         validatePassword();
       }
    });
-
-   // validate the zipcode on country change
-   if (input === zipcode) {
-      input.addEventListener("change", validateZipcode);
-   }
 });
 
-inputs.forEach((input) => {
-   if (input.checkValidity()) {
+// function to validate email
+function validateEmail() {
+   if (email.value === "") {
+      email.setCustomValidity("Email is required");
+   } else if (!emailRegex.test(email.value)) {
+      email.setCustomValidity("Please enter a valid email address");
+   } else {
+      email.setCustomValidity("");
+   }
+   updateInputClasses(email);
+}
+
+// function to validate zipcode
+function validateZipcode() {
+   const pattern = patterns[country.value];
+   if (pattern && pattern.test(zipcode.value.trim())) {
+      zipcode.setCustomValidity("");
+   } else {
+      zipcode.setCustomValidity(
+         "Please enter a valid zipcode for the selected country"
+      );
+   }
+   updateInputClasses(zipcode);
+}
+
+// function to validate password
+function validatePassword() {
+   if (password.value === "") {
+      password.setCustomValidity("Password is required");
+   } else if (password.value.toLowerCase() === "password") {
+      password.setCustomValidity("Password cannot be password");
+   } else if (!passwordRegex.test(password.value)) {
+      password.setCustomValidity(
+         "Password must contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character."
+      );
+   } else {
+      password.setCustomValidity("");
+   }
+   updateInputClasses(password);
+}
+
+// function to validate confirm password
+function validateConfirmPassword() {
+   let errorMessage = "";
+
+   if (confirmPassword.value === "") {
+      errorMessage = "Confirm password is required";
+   } else if (confirmPassword.value.toLowerCase() === "password") {
+      errorMessage = "Confirm password cannot be password";
+   } else if (confirmPassword.value !== password.value) {
+      errorMessage = "Passwords do not match";
+   }
+
+   confirmPassword.setCustomValidity(errorMessage);
+   updateInputClasses(confirmPassword);
+}
+
+// function to toggle the input classes
+function updateInputClasses(input) {
+   if (input.validity.valid) {
+      input.classList.remove("invalid");
       input.classList.add("valid");
+   } else {
+      input.classList.add("invalid");
+      input.classList.remove("valid");
    }
-});
+}
+
+// function to handle general input validation
+function validateInput(input) {
+   if (input === email) {
+      validateEmail(input);
+   } else if (input === password) {
+      validatePassword(input);
+   } else {
+      if (!input.checkValidity()) {
+         input.classList.add("invalid");
+         input.classList.remove("valid");
+      } else {
+         input.classList.remove("invalid");
+         input.classList.add("valid");
+         input.setCustomValidity("");
+      }
+   }
+}
